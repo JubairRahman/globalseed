@@ -19,6 +19,7 @@ const photo = {
 }
 
 // header
+
 function Header() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
@@ -33,8 +34,8 @@ function Header() {
     ['Contact', '/contact']
   ]
 
-const handleSearch = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
+  const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     const query = search.trim()
 
     if (query) {
@@ -46,27 +47,36 @@ const handleSearch = (e: FormEvent<HTMLFormElement>) => {
 
   return (
     <>
+      {/* Top contact bar */}
       <div className="topbar">
         <div className="container topbar-inner">
-          <span>Growing better harvests, together.</span>
-          <Link to="/contact">
-            Product enquiries <ArrowRight size={13} />
-          </Link>
+          <div className="topbar-spacer" />
+
+         <div className="topbar-contacts flex items-center gap-8">
+  <a href="tel:+8801XXXXXXXXX">
+    <Phone size={16} />
+    +880 1XXX-XXXXXX
+  </a>
+  <a href="tel:+8801XXXXXXXXX">
+    <Phone size={16} />
+    +880 1XXX-XXXXXX
+  </a>
+  <a href="mailto:info@yourcompany.com">
+    <Mail size={16} />
+    info@yourcompany.com 
+  </a>
+</div>
         </div>
       </div>
 
+      {/* Main navigation */}
       <header className="header">
         <div className="container nav-wrap">
 
-          <Link
-            to="/"
-            className="brand"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/" className="brand" onClick={() => setOpen(false)}>
             <span className="brand-mark">
               <Sprout size={27} />
             </span>
-
             <span className="brand-name">
               GLOBAL<span className="brand-light"> SEED</span>
               <small>COMPANY</small>
@@ -87,39 +97,33 @@ const handleSearch = (e: FormEvent<HTMLFormElement>) => {
               <NavLink
                 key={url}
                 to={url}
-                onClick={() => setOpen(false)}
                 end={url === '/'}
+                onClick={() => setOpen(false)}
               >
                 {label}
               </NavLink>
             ))}
-
-            <form className="nav-search" onSubmit={handleSearch}>
-              <input
-                type="search"
-                placeholder="Search seeds..."
-                aria-label="Search seed catalogue"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <button type="submit" aria-label="Search">
-                <span>⌕</span>
-              </button>
-            </form>
-
-            <Link
-              className="nav-cta"
-              to="/contact"
-              onClick={() => setOpen(false)}
-            >
-              Get in touch <ArrowRight size={15} />
-            </Link>
           </nav>
+
+          <form className="nav-search" onSubmit={handleSearch}>
+            <input
+              type="search"
+              placeholder="Search seeds..."
+              aria-label="Search seed catalogue"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button type="submit" aria-label="Search">
+              <Search size={18} />
+            </button>
+          </form>
+
         </div>
       </header>
     </>
   )
 }
+
 
 
 function Footer() {
