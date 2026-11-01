@@ -1,5 +1,13 @@
+import type { FormEvent } from 'react'
 import { useMemo, useState } from 'react'
-import { Link, NavLink, Route, Routes, useParams } from 'react-router-dom'
+import {
+  Link,
+  NavLink,
+  useNavigate,
+  Route,
+  Routes,
+  useParams
+} from 'react-router-dom'
 import { ArrowRight, Sprout, Menu, X, Search, ChevronLeft, ChevronRight, Leaf, FlaskConical, ShieldCheck, Globe2, Download, Mail, MapPin, Phone, Instagram, Facebook, Linkedin, BookOpen, Sun, Flower2 } from 'lucide-react'
 import { categories, seeds } from './data'
 
@@ -10,15 +18,109 @@ const photo = {
   leaves: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1200&q=85'
 }
 
+// header
 function Header() {
   const [open, setOpen] = useState(false)
-  const links = [['Home', '/'], ['About Us', '/about'], ['Our Seeds', '/seeds'], ['Research', '/research'], ['Knowledge', '/knowledge'], ['Contact', '/contact']]
-  return <header className="header"><div className="container nav-wrap">
-    <Link to="/" className="brand" onClick={() => setOpen(false)}><span className="brand-mark"><Sprout size={25}/></span><span>GLOBAL<span className="brand-light"> SEED</span><small>COMPANY</small></span></Link>
-    <button className="mobile-toggle" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X/> : <Menu/>}</button>
-    <nav className={open ? 'nav-links show' : 'nav-links'}>{links.map(([label, url]) => <NavLink key={url} to={url} onClick={() => setOpen(false)}>{label}</NavLink>)}<Link className="nav-cta" to="/contact" onClick={() => setOpen(false)}>Get in touch <ArrowRight size={15}/></Link></nav>
-  </div></header>
+  const [search, setSearch] = useState('')
+  const navigate = useNavigate()
+
+  const links = [
+    ['Home', '/'],
+    ['About Us', '/about'],
+    ['Our Seeds', '/seeds'],
+    ['Research', '/research'],
+    ['Knowledge', '/knowledge'],
+    ['Contact', '/contact']
+  ]
+
+const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+    const query = search.trim()
+
+    if (query) {
+      navigate(`/seeds?search=${encodeURIComponent(query)}`)
+      setSearch('')
+      setOpen(false)
+    }
+  }
+
+  return (
+    <>
+      <div className="topbar">
+        <div className="container topbar-inner">
+          <span>Growing better harvests, together.</span>
+          <Link to="/contact">
+            Product enquiries <ArrowRight size={13} />
+          </Link>
+        </div>
+      </div>
+
+      <header className="header">
+        <div className="container nav-wrap">
+
+          <Link
+            to="/"
+            className="brand"
+            onClick={() => setOpen(false)}
+          >
+            <span className="brand-mark">
+              <Sprout size={27} />
+            </span>
+
+            <span className="brand-name">
+              GLOBAL<span className="brand-light"> SEED</span>
+              <small>COMPANY</small>
+            </span>
+          </Link>
+
+          <button
+            className="mobile-toggle"
+            onClick={() => setOpen(!open)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <nav className={open ? 'nav-links show' : 'nav-links'}>
+            {links.map(([label, url]) => (
+              <NavLink
+                key={url}
+                to={url}
+                onClick={() => setOpen(false)}
+                end={url === '/'}
+              >
+                {label}
+              </NavLink>
+            ))}
+
+            <form className="nav-search" onSubmit={handleSearch}>
+              <input
+                type="search"
+                placeholder="Search seeds..."
+                aria-label="Search seed catalogue"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <button type="submit" aria-label="Search">
+                <span>⌕</span>
+              </button>
+            </form>
+
+            <Link
+              className="nav-cta"
+              to="/contact"
+              onClick={() => setOpen(false)}
+            >
+              Get in touch <ArrowRight size={15} />
+            </Link>
+          </nav>
+        </div>
+      </header>
+    </>
+  )
 }
+
 
 function Footer() {
   return <footer className="footer"><div className="container footer-grid">
