@@ -1,0 +1,15 @@
+export type Seed = {
+  id: number; name: string; category: string; type: string; season: string;
+  maturity: string; description: string; image: string; highlights: string[]
+}
+
+export const seeds: Seed[] = [
+  { id: 1, name: 'Ruby Star Tomato', category: 'Vegetable', type: 'Hybrid (demo)', season: 'Winter', maturity: '65–75 days (demo)', description: 'A demonstration tomato variety profile. Replace this copy with verified product information before publishing.', image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=85', highlights: ['Bright red fruit', 'Fresh market use', 'Demonstration data'] },
+  { id: 2, name: 'Emerald Cucumber', category: 'Vegetable', type: 'Hybrid (demo)', season: 'Summer', maturity: '45–55 days (demo)', description: 'A sample cucumber listing designed to demonstrate the seed directory and product detail layout.', image: 'https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=900&q=85', highlights: ['Fresh green fruit', 'Salad and cooking', 'Demonstration data'] },
+  { id: 3, name: 'Golden Pumpkin', category: 'Vegetable', type: 'OP (demo)', season: 'Year-round*', maturity: '90–100 days (demo)', description: 'An example pumpkin profile. Growing season and specifications must be confirmed for the actual variety and location.', image: 'https://images.unsplash.com/photo-1509622905150-fa66d3906e09?auto=format&fit=crop&w=900&q=85', highlights: ['Vibrant fruit', 'Multiple culinary uses', 'Demonstration data'] },
+  { id: 4, name: 'Green Crown Cabbage', category: 'Vegetable', type: 'Hybrid (demo)', season: 'Winter', maturity: '70–80 days (demo)', description: 'A placeholder cabbage entry showing how crop details can be presented consistently.', image: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=900&q=85', highlights: ['Compact head (sample)', 'Cool-season crop', 'Demonstration data'] },
+  { id: 5, name: 'Sunrise Watermelon', category: 'Fruit', type: 'Hybrid (demo)', season: 'Summer', maturity: '80–90 days (demo)', description: 'A sample watermelon variety. Do not treat these details as verified commercial seed specifications.', image: 'https://images.unsplash.com/photo-1563114773-84221bd62daa?auto=format&fit=crop&w=900&q=85', highlights: ['Refreshing fruit', 'Warm-season crop', 'Demonstration data'] },
+  { id: 6, name: 'Crimson Chili', category: 'Vegetable', type: 'OP (demo)', season: 'Winter', maturity: '75–85 days (demo)', description: 'Example chili listing for testing the catalog, filters, and product page.', image: 'https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=900&q=85', highlights: ['Red ripe fruit', 'Culinary crop', 'Demonstration data'] }
+]
+
+export const categories = ['All', 'Vegetable', 'Fruit', 'Grain', 'Oilseed', 'Flower']
