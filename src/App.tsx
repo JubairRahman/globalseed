@@ -140,16 +140,134 @@ function SeedCard({ seed }: { seed: typeof seeds[number] }) {
 
 function Home() {
   const [page, setPage] = useState(0)
+  const [direction, setDirection] = useState<'next' | 'prev'>('next')
+
   const catalog = [seeds[0], seeds[1], seeds[2], seeds[3]]
   const current = catalog[page % catalog.length]
-  const next = () => setPage(p => (p + 1) % catalog.length)
-  const prev = () => setPage(p => (p - 1 + catalog.length) % catalog.length)
+
+  const next = () => {
+    setDirection('next')
+    setPage(p => (p + 1) % catalog.length)
+  }
+
+  const prev = () => {
+    setDirection('prev')
+    setPage(p => (p - 1 + catalog.length) % catalog.length)
+  }
+
+  // Keep the rest of your existing Home() JSX below
   return <>
-    <section className="hero" style={{backgroundImage:`linear-gradient(90deg, rgba(9,43,27,.88), rgba(9,43,27,.46) 55%, rgba(9,43,27,.12)), url(${photo.hero})`}}><div className="container hero-content"><span className="eyebrow eyebrow-light"><Leaf size={15}/> ROOTED IN NATURE</span><h1>Growing a greener tomorrow, <em>one seed at a time.</em></h1><p>Discover quality seeds, thoughtful agricultural solutions, and knowledge that helps communities grow.</p><div className="hero-actions"><Link to="/seeds" className="btn btn-primary">Explore our seeds <ArrowRight size={17}/></Link><Link to="/about" className="btn btn-outline">Discover our story</Link></div><div className="hero-note"><span className="note-line"/> A future shaped by better growing</div></div><div className="hero-stamp"><Sprout size={27}/><span>GROW<br/>WITH NATURE</span></div></section>
 
-    <section className="intro section-pad"><div className="container intro-grid"><div className="intro-image"><img src={photo.field} alt="Green agricultural field"/><div className="image-caption"><Sprout/><span>Inspired by the potential in every seed.</span></div></div><div className="intro-copy"><span className="eyebrow">WHO WE ARE</span><h2>Rooted in nature.<br/><em>Driven by possibility.</em></h2><p className="lead">At Global Seed Company, we believe every seed holds the promise of something greater.</p><p>We are building a platform to share seed information, agricultural knowledge, and growing solutions. Our commitment is to make useful information easier to discover for farmers, partners, and communities.</p><Link to="/about" className="text-link">Learn about our company <ArrowRight size={16}/></Link><div className="mini-values"><span><ShieldCheck/> Quality focused</span><span><Globe2/> Growth minded</span></div></div></div></section>
+<section
+  className="hero"
+  style={{
+    backgroundImage: `linear-gradient(90deg, rgba(9,43,27,.90), rgba(9,43,27,.62) 60%, rgba(9,43,27,.18)), url(${photo.hero})`
+  }}
+>
+  <div className="container hero-content">
+    <span className="eyebrow eyebrow-light">
+      <Leaf size={17} /> GROWING WITH NATURE
+    </span>
 
-    <section className="catalog-section section-pad"><div className="container"><div className="section-heading centered"><span className="eyebrow">THE SEED COLLECTION</span><h2>Turn a page. <em>Discover growth.</em></h2><p>Explore our sample seed collection in an interactive catalog experience.</p></div><div className="book-stage"><div className="book-shadow"/><div className="book"><div className="book-cover"><div className="cover-art"><Sprout size={54}/><span>GSC / SEED COLLECTION</span></div><div className="cover-title"><small>GLOBAL SEED COMPANY</small><h3>The Growing<br/>Collection</h3><p>Seeds for a brighter harvest</p></div><div className="cover-footer">BOTANICAL SERIES · VOL. 01</div></div><div className="book-page"><div className="page-top"><span>FEATURED VARIETY</span><span>0{page+1} / 04</span></div><img src={current.image} alt={current.name}/><div className="page-content"><small>{current.category.toUpperCase()} · {current.type}</small><h3>{current.name}</h3><p>{current.description}</p><div className="page-spec"><span><b>Season</b>{current.season}</span><span><b>Maturity</b>{current.maturity}</span></div><Link to={`/seeds/${current.id}`} className="text-link">View seed details <ArrowRight size={14}/></Link></div><div className="page-number">GSC — {String(page+1).padStart(2,'0')}</div></div></div><div className="book-controls"><button onClick={prev} aria-label="Previous catalog page"><ChevronLeft/></button><span>Browse the collection <b>{page+1} / {catalog.length}</b></span><button onClick={next} aria-label="Next catalog page"><ChevronRight/></button></div></div><div className="center"><Link to="/seeds" className="btn btn-dark">Explore all seeds <ArrowRight size={16}/></Link></div></div></section>
+    <h1>
+      Better Seeds.<br />
+      Stronger Crops.<br />
+      <em>Better Harvests.</em>
+    </h1>
+
+    <p>
+      Explore our seed collection and practical growing information
+      to help you make informed choices for your farm.
+    </p>
+
+    <div className="hero-actions">
+      <Link to="/seeds" className="btn btn-primary">
+        Explore Our Seeds <ArrowRight size={19} />
+      </Link>
+
+      <Link to="/contact" className="btn btn-outline">
+        Contact Our Team
+      </Link>
+    </div>
+
+    <div className="hero-note">
+      <span className="note-line" />
+      Growing opportunities for every farmer
+    </div>
+  </div>
+
+  <div className="hero-stamp">
+    <Sprout size={29} />
+    <span>GROW<br />WITH NATURE</span>
+  </div>
+</section>
+
+
+<section className="intro section-pad">
+  <div className="container intro-grid">
+
+    <div className="intro-image">
+      <img src={photo.field} alt="Healthy green agricultural field" />
+      <div className="image-caption">
+        <Sprout />
+        <span>Growing better crops starts with better choices.</span>
+      </div>
+    </div>
+
+    <div className="intro-copy">
+      <span className="eyebrow">ABOUT GLOBAL SEED COMPANY</span>
+
+      <h2>
+        Helping farmers grow
+        <br />
+        <em>with confidence.</em>
+      </h2>
+
+      <p className="lead">
+        Every successful harvest begins with the right seed.
+        We believe farmers deserve access to quality seed
+        information and reliable agricultural knowledge.
+      </p>
+
+      <p>
+        Global Seed Company aims to connect farmers with seed
+        varieties, useful product information and practical
+        growing resources. Our goal is to make it easier to
+        explore options and make informed farming decisions.
+      </p>
+
+      <Link to="/about" className="text-link">
+        Learn more about us <ArrowRight size={17} />
+      </Link>
+
+      <div className="mini-values">
+        <span><ShieldCheck /> Quality focused</span>
+        <span><Globe2 /> Growing together</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+    <section className="catalog-section section-pad"><div className="container"><div className="section-heading centered"><span className="eyebrow">THE SEED COLLECTION</span><h2>Turn a page. <em>Discover growth.</em></h2><p>Explore our sample seed collection in an interactive catalog experience.</p></div><div className="book-stage"><div className="book-shadow"/><div className="book"><div className="book-cover"><div className="cover-art"><Sprout size={54}/><span>GSC / SEED COLLECTION</span></div><div className="cover-title"><small>GLOBAL SEED COMPANY</small><h3>The Growing<br/>Collection</h3><p>Seeds for a brighter harvest</p></div><div className="cover-footer">BOTANICAL SERIES · VOL. 01</div></div>
+<div
+  key={page}
+  className={`book-page ${direction === 'next' ? 'turn-next' : 'turn-prev'}`}
+>      <div className="page-top"><span>FEATURED VARIETY</span><span>0{page+1} / 04</span></div><img src={current.image} alt={current.name}/><div className="page-content"><small>{current.category.toUpperCase()} · {current.type}</small><h3>{current.name}</h3><p>{current.description}</p><div className="page-spec"><span><b>Season</b>{current.season}</span><span><b>Maturity</b>{current.maturity}</span></div><Link to={`/seeds/${current.id}`} className="text-link">View seed details <ArrowRight size={14}/></Link></div><div className="page-number">GSC — {String(page+1).padStart(2,'0')}</div></div></div><div className="book-controls"><button onClick={prev} aria-label="Previous catalog page"><ChevronLeft/></button><span>Browse the collection <b>{page+1} / {catalog.length}</b></span><button onClick={next} aria-label="Next catalog page"><ChevronRight/></button></div></div>
+<div className="catalog-actions">
+  <Link to="/seeds" className="btn btn-dark">
+    Explore all seeds <ArrowRight size={16} />
+  </Link>
+
+  <a
+    href="/catalog/seed-catalog.pdf"
+    className="btn btn-outline"
+    download="Global-Seed-Company-Catalogue.pdf"
+  >
+    <Download size={17} />
+    Download Catalogue
+  </a>
+</div></div></section>
 
     <section className="category-section section-pad"><div className="container"><div className="section-heading split-heading"><div><span className="eyebrow">EXPLORE BY CATEGORY</span><h2>A world of seeds, <em>full of possibility.</em></h2></div><Link to="/seeds" className="text-link">View all seeds <ArrowRight size={16}/></Link></div><div className="category-grid">{[['Vegetable Seeds','Fresh possibilities for everyday growing','🥬'],['Fruit Seeds','Cultivating color, flavor, and abundance','🍉'],['Grain & Cereal','The foundation of food and farming','🌾'],['Flower Seeds','Bring natural beauty to life','🌼']].map(([name,desc,emoji])=><Link to="/seeds" className="category-card" key={name}><span className="category-emoji">{emoji}</span><div><h3>{name}</h3><p>{desc}</p><span className="round-arrow"><ArrowRight size={17}/></span></div></Link>)}</div></div></section>
 
