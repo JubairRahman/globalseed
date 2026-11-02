@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   Link,
@@ -8,9 +9,9 @@ import {
   Routes,
   useParams
 } from 'react-router-dom'
-import { ArrowRight, Sprout, Menu, X, Search, ChevronLeft, ChevronRight, Leaf, FlaskConical, ShieldCheck, Globe2, Download, Mail, MapPin, Phone, Instagram, Facebook, Linkedin, BookOpen, Sun, Flower2, Quote, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, Sprout, MessageCircle, Menu, X, Search, ChevronLeft, ChevronRight, Leaf, FlaskConical, ShieldCheck, Globe2, Download, Mail, MapPin, Phone, Instagram, Facebook, Linkedin, BookOpen, Sun, Flower2, Quote, ArrowUpRight } from 'lucide-react'
 import { categories, seeds } from './data'
-
+import { FaWhatsapp } from 'react-icons/fa'
 const photo = {
   hero: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=90',
   field: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1100&q=85',
@@ -24,14 +25,26 @@ function Header() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
   const navigate = useNavigate()
+  const { t, i18n } = useTranslation()
+  const activeLanguage = i18n.resolvedLanguage || i18n.language
+
+  const changeLanguage = (language: 'en' | 'bn') => {
+    void i18n.changeLanguage(language)
+    localStorage.setItem('gsc-language', language)
+    document.documentElement.lang = language
+  }
+
+  useEffect(() => {
+    document.documentElement.lang = activeLanguage
+  }, [activeLanguage])
 
   const links = [
-    ['Home', '/'],
-    ['About Us', '/about'],
-    ['Our Seeds', '/seeds'],
-    ['Research', '/research'],
-    ['Knowledge', '/knowledge'],
-    ['Contact', '/contact']
+    [t('navigation.home'), '/'],
+    [t('navigation.about'), '/about'],
+    [t('navigation.seeds'), '/seeds'],
+    [t('navigation.research'), '/research'],
+    [t('navigation.knowledge'), '/knowledge'],
+    [t('navigation.contact'), '/contact']
   ]
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -52,19 +65,50 @@ function Header() {
         <div className="container topbar-inner">
           <div className="topbar-spacer" />
 
-         <div className="topbar-contacts flex items-center gap-8">
-  <a href="tel:+8801XXXXXXXXX">
-    <Phone size={16} />
-    +880 1XXX-XXXXXX
-  </a>
-  <a href="tel:+8801XXXXXXXXX">
-    <Phone size={16} />
-    +880 1XXX-XXXXXX
-  </a>
-  <a href="mailto:info@yourcompany.com">
-    <Mail size={16} />
-    info@yourcompany.com 
-  </a>
+          <div className="contact-highlight-strip">
+            <a href="tel:+8801XXXXXXXXX" className="contact-highlight-item">
+              <Phone size={21} />
+              <span>
+                <small>CALL US</small>
+                <strong>+880 1XXX-XXXXXX</strong>
+              </span>
+            </a>
+
+            <a href="tel:+8801YYYYYYYYY" className="contact-highlight-item">
+              <Phone size={21} />
+              <span>
+                <small>CALL US</small>
+                <strong>+880 1YYY-YYYYYY</strong>
+              </span>
+            </a>
+
+            <a href="mailto:info@yourcompany.com" className="contact-highlight-item">
+              <Mail size={21} />
+              <span>
+                <small>EMAIL US</small>
+                <strong>info@yourcompany.com</strong>
+              </span>
+            </a>
+
+  <div className="language-switcher topbar-language-switcher" aria-label="Select language">
+    <button
+      type="button"
+      className={activeLanguage === 'en' ? 'active' : ''}
+      onClick={() => changeLanguage('en')}
+      aria-pressed={activeLanguage === 'en'}
+    >
+      🇺🇸 EN
+    </button>
+    <span aria-hidden="true">|</span>
+    <button
+      type="button"
+      className={activeLanguage === 'bn' ? 'active' : ''}
+      onClick={() => changeLanguage('bn')}
+      aria-pressed={activeLanguage === 'bn'}
+    >
+      🇧🇩 বাংলা
+    </button>
+  </div>
 </div>
         </div>
       </div>
@@ -104,7 +148,6 @@ function Header() {
               </NavLink>
             ))}
           </nav>
-
           <form className="nav-search" onSubmit={handleSearch}>
             <input
               type="search"
@@ -126,13 +169,101 @@ function Header() {
 
 
 
+
 function Footer() {
-  return <footer className="footer"><div className="container footer-grid">
-    <div className="footer-brand"><Link to="/" className="brand brand-white"><span className="brand-mark"><Sprout size={25}/></span><span>GLOBAL<span className="brand-light"> SEED</span><small>COMPANY</small></span></Link><p>Growing a greener tomorrow, one seed at a time. Discover quality seeds and practical agricultural knowledge.</p><div className="socials"><a href="#facebook" aria-label="Facebook"><Facebook/></a><a href="#instagram" aria-label="Instagram"><Instagram/></a><a href="#linkedin" aria-label="LinkedIn"><Linkedin/></a></div></div>
-    <div><h4>Explore</h4><Link to="/about">About us</Link><Link to="/seeds">Our seeds</Link><Link to="/research">Research & development</Link><Link to="/knowledge">Knowledge center</Link></div>
-    <div><h4>Get in touch</h4><span><Mail size={16}/> info@globalseed.example</span><span><Phone size={16}/> +880 1XXX-XXXXXX</span><span><MapPin size={16}/> Company address to be added</span></div>
-  </div><div className="container footer-bottom"><span>© {new Date().getFullYear()} Global Seed Company. All rights reserved.</span><span>Growing together with nature.</span></div></footer>
+  return (
+    <footer className="footer">
+      <div className="container footer-grid">
+
+        <div className="footer-brand">
+          <Link to="/" className="brand brand-white">
+            <span className="brand-mark">
+              <Sprout size={27} />
+            </span>
+            <span>
+              GLOBAL<span className="brand-light"> SEED</span>
+              <small>COMPANY</small>
+            </span>
+          </Link>
+
+          <p>
+            Growing a greener tomorrow, one seed at a time.
+            Discover quality seeds and practical agricultural knowledge
+            with Global Seed Company.
+          </p>
+
+<div className="socials">
+  <a href="#facebook" aria-label="Facebook" className="social-facebook">
+    <Facebook size={20} />
+  </a>
+
+  <a href="#instagram" aria-label="Instagram" className="social-instagram">
+    <Instagram size={20} />
+  </a>
+
+  <a href="#linkedin" aria-label="LinkedIn" className="social-linkedin">
+    <Linkedin size={20} />
+  </a>
+
+  <a href="https://wa.me/8801XXXXXXXXX" aria-label="WhatsApp" className="social-whatsapp">
+    <FaWhatsapp size={21} />
+  </a>
+</div>
+        </div>
+
+        <div className="footer-navigation">
+          <h4>EXPLORE</h4>
+          <Link to="/about">About Us</Link>
+          <Link to="/seeds">Our Seeds</Link>
+          <Link to="/research">Research & Development</Link>
+          <Link to="/knowledge">Knowledge Center</Link>
+        </div>
+
+        <div className="footer-contact">
+          <h4>GET IN TOUCH</h4>
+
+          <div className="footer-contact-item">
+            <Mail size={19} />
+            <span>
+              <small>EMAIL</small>
+              info@globalseed.example
+            </span>
+          </div>
+
+          <div className="footer-contact-item">
+            <Phone size={19} />
+            <span>
+              <small>PHONE</small>
+              +880 1XXX-XXXXXX
+            </span>
+          </div>
+
+          <div className="footer-contact-item">
+            <MapPin size={19} />
+            <span>
+              <small>OFFICE</small>
+              Company address to be added
+            </span>
+          </div>
+
+          <Link to="/contact" className="footer-contact-link">
+            Contact our team <ArrowRight size={16} />
+          </Link>
+        </div>
+
+      </div>
+
+      <div className="container footer-bottom">
+        <span>
+          © {new Date().getFullYear()} Global Seed Company.
+          All rights reserved.
+        </span>
+        {/* <span>Growing together with nature.</span> */}
+      </div>
+    </footer>
+  )
 }
+
 
 
 function SeedCard({ seed }: { seed: typeof seeds[number] }) {
@@ -804,7 +935,7 @@ function SeedsPage() {
     ))}
   </div>
 </div>
-<p className="result-count">{filtered.length} sample varieties</p><div className="seed-grid">{filtered.map(s=><SeedCard key={s.id} seed={s}/>)}</div>{filtered.length===0&&<div className="empty-state"><Sprout size={32}/><h3>No varieties found</h3><p>Try another search or category.</p></div>}<p className="disclaimer">Note: All seed names, characteristics, seasons, and maturity details are sample content for demonstration only. Replace with verified company data.</p></div></section></>
+<p className="result-count">{filtered.length} sample varieties</p><div className="seed-grid">{filtered.map(s=><SeedCard key={s.id} seed={s}/>)}</div>{filtered.length===0&&<div className="empty-state"><Sprout size={32}/><h3>No varieties found</h3><p>Try another search or category.</p></div>}<p className="disclaimer">Note: All seed names, characteristics, seasons, and maturity details are here, for more information, please contact our sales team.</p></div></section></>
 }
 
 function SeedDetail() {
@@ -1238,6 +1369,378 @@ function AboutJourney() {
 
 function ResearchPage(){return <><PageHero tag="RESEARCH & DEVELOPMENT" title="Curiosity is where growth begins." description="Explore the research themes, quality practices, and agricultural ideas that support better growing."/><section className="section-pad"><div className="container feature-grid"><img src={photo.research} alt="Research environment"/><div><span className="eyebrow">OUR APPROACH</span><h2>Knowledge in service of <em>nature.</em></h2><p>Use this page to introduce the company's actual research activities, seed testing processes, crop development work, and quality assurance practices.</p><ul className="check-list"><li><FlaskConical/> Seed research and evaluation</li><li><ShieldCheck/> Quality assessment</li><li><Leaf/> Sustainable growing practices</li></ul></div></div></section></>}
 function KnowledgePage(){return <><PageHero tag="KNOWLEDGE CENTER" title="Learn, grow, and share." description="A home for practical growing guides, crop knowledge, and agricultural insights."/><section className="section-pad"><div className="container knowledge-grid">{[['Seed selection basics','A starting point for understanding seed choice.','🌱'],['Soil preparation','Why healthy soil is an important part of growing.','🌿'],['Planning by season','Think ahead with a seasonal growing plan.','☀️']].map(([t,d,e])=><article className="knowledge-card" key={t}><div className="knowledge-art">{e}</div><div className="knowledge-copy"><small>LEARNING RESOURCE</small><h3>{t}</h3><p>{d}</p><span className="text-link">Article coming soon <ArrowRight size={15}/></span></div></article>)}</div></section></>}
-function ContactPage(){const [sent,setSent]=useState(false);return <><PageHero tag="CONTACT US" title="Let's start a conversation." description="Have a question, partnership idea, or seed inquiry? We'd be glad to hear from you."/><section className="section-pad"><div className="container contact-grid"><div><span className="eyebrow">GET IN TOUCH</span><h2>We'd love to <em>hear from you.</em></h2><p>Replace the sample contact details with the company's official information.</p><div className="contact-detail"><Mail/> <span><b>Email</b>info@globalseed.example</span></div><div className="contact-detail"><Phone/> <span><b>Phone</b>+880 1XXX-XXXXXX</span></div><div className="contact-detail"><MapPin/> <span><b>Office</b>Company address to be added</span></div></div><form className="contact-form" onSubmit={e=>{e.preventDefault();setSent(true)}}><h3>Send an inquiry</h3><label>Your name<input required placeholder="Full name"/></label><label>Email address<input required type="email" placeholder="you@example.com"/></label><label>Inquiry type<select><option>General inquiry</option><option>Seed information</option><option>Distribution / partnership</option></select></label><label>Message<textarea required rows={5} placeholder="How can we help?"/></label><button className="btn btn-dark" type="submit">Send message <ArrowRight size={16}/></button>{sent&&<p className="form-note">Thank you! This demo form is not connected to an email service yet. Connect a backend before accepting real inquiries.</p>}</form></div></section></>}
-function App(){return <><Header/><main><Routes><Route path="/" element={<Home/>}/><Route path="/about" element={<AboutPage/>}/><Route path="/seeds" element={<SeedsPage/>}/><Route path="/seeds/:id" element={<SeedDetail/>}/><Route path="/research" element={<ResearchPage/>}/><Route path="/knowledge" element={<KnowledgePage/>}/><Route path="/contact" element={<ContactPage/>}/><Route path="*" element={<PageHero tag="404" title="Page not found" description="The page you are looking for does not exist."/>}/></Routes></main><Footer/></>}
+
+function ContactPage() {
+  const [sent, setSent] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    inquiryType: 'General inquiry',
+    message: ''
+  })
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
+    setSent(false)
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSent(true)
+  }
+
+  return (
+    <>
+      <PageHero
+        tag="CONTACT GLOBAL SEED"
+        title="Let's grow something meaningful together."
+        description="Whether you're exploring seed solutions, building a partnership or simply have a question, we're ready to start a conversation."
+      />
+
+      <section className="contact-page-section">
+        <div className="container">
+          <div className="contact-intro">
+            <span className="eyebrow">WE'RE HERE TO CONNECT</span>
+            <h2>Good things begin with <em>a conversation.</em></h2>
+            <p>
+              Tell us what you're looking for. Our team will be glad to
+              understand your needs and explore how we can help.
+            </p>
+          </div>
+
+          <div className="contact-page-grid">
+            <aside className="contact-information">
+              <span className="contact-side-label">GET IN TOUCH</span>
+              <h3>Let's talk about <em>what's next.</em></h3>
+              <p>
+                Reach out to us for product information, distribution
+                opportunities or general inquiries.
+              </p>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon"><Mail size={19} /></div>
+                <div>
+                  <small>EMAIL US</small>
+                  <strong>info@globalseed.example</strong>
+                  <span>Official email to be confirmed</span>
+                </div>
+              </div>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon"><Phone size={19} /></div>
+                <div>
+                  <small>CALL US</small>
+                  <strong>+880 1XXX-XXXXXX</strong>
+                  <span>Official phone number to be confirmed</span>
+                </div>
+              </div>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon"><MapPin size={19} /></div>
+                <div>
+                  <small>VISIT US</small>
+                  <strong>Global Seed Company</strong>
+                  <span>Office address to be confirmed</span>
+                </div>
+              </div>
+
+              <div className="contact-side-note">
+                <Sprout size={21} />
+                <span>ROOTED IN TRUST. GROWING TOGETHER.</span>
+              </div>
+            </aside>
+
+            <div className="contact-form-panel">
+              <div className="contact-form-heading">
+                <span className="eyebrow">SEND AN INQUIRY</span>
+                <h3>How can we <em>help you?</em></h3>
+                <p>Complete the form below and tell us a little about your inquiry.</p>
+              </div>
+
+              <form className="premium-contact-form" onSubmit={handleSubmit}>
+                <div className="contact-form-row">
+                  <label>
+                    Full name <span>*</span>
+                    <input
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Your full name"
+                      autoComplete="name"
+                      required
+                    />
+                  </label>
+
+                  <label>
+                    Email address <span>*</span>
+                    <input
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      required
+                    />
+                  </label>
+                </div>
+
+                <div className="contact-form-row">
+                  <label>
+                    Phone number
+                    <input
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+880"
+                      autoComplete="tel"
+                    />
+                  </label>
+
+                  <label>
+                    Inquiry type <span>*</span>
+                    <select
+                      name="inquiryType"
+                      value={formData.inquiryType}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option>General inquiry</option>
+                      <option>Seed product information</option>
+                      <option>Distribution opportunity</option>
+                      <option>Business partnership</option>
+                      <option>Other</option>
+                    </select>
+                  </label>
+                </div>
+
+                <label>
+                  Your message <span>*</span>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Tell us how we can help..."
+                    rows={5}
+                    required
+                  />
+                </label>
+
+                <button type="submit" className="contact-submit-button">
+                  Send your inquiry <ArrowRight size={17} />
+                </button>
+
+                {sent && (
+                  <p className="contact-demo-message" role="status">
+                       Thank you for your interest in Global Seed Company!
+    We appreciate you reaching out and look forward to connecting with you.
+                  </p>
+                )}
+
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function ChatAssistant() {
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeQuestion, setActiveQuestion] = useState<string | null>(null)
+
+  const questions = [
+    { id: 'company', link: '/about' },
+    { id: 'seeds', link: '/seeds' },
+    { id: 'selection', link: '/seeds' },
+    { id: 'catalogue', link: '/seeds' },
+    { id: 'distribution', link: '/contact' },
+    { id: 'contact', link: '/contact' }
+  ]
+
+  const selected = questions.find(
+    (question) => question.id === activeQuestion
+  )
+
+  const handleQuestion = (id: string) => {
+    setActiveQuestion(id)
+  }
+
+  const showQuestions = () => {
+    setActiveQuestion(null)
+  }
+
+  return (
+    <div className="gs-assistant">
+      {isOpen && (
+        <section
+          className="gs-chat-window"
+          aria-label={t('chatbot.title')}
+        >
+          <header className="gs-chat-header">
+            <div className="gs-chat-brand">
+              <div className="gs-chat-brand-icon">
+                <Sprout size={23} />
+              </div>
+              <div>
+                <strong>{t('chatbot.title')}</strong>
+                <span>
+                  <i /> {t('chatbot.headerSubtitle')}
+                </span>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="gs-chat-close"
+              onClick={() => setIsOpen(false)}
+              aria-label={t('chatbot.close')}
+            >
+              <X size={20} />
+            </button>
+          </header>
+
+          <div className="gs-chat-body">
+            <div className="gs-chat-welcome">
+              <div className="gs-chat-avatar">
+                <Sprout size={19} />
+              </div>
+              <div className="gs-chat-bubble">
+                {t('chatbot.welcome')}
+                <br />
+                {t('chatbot.greeting')}
+              </div>
+            </div>
+
+            {selected ? (
+              <>
+                <div className="gs-chat-user-message">
+                  {t(`chatbot.${selected.id}`)}
+                </div>
+
+                <div className="gs-chat-answer">
+                  <div className="gs-chat-avatar">
+                    <Sprout size={17} />
+                  </div>
+                  <div className="gs-chat-answer-content">
+                    <p>{t(`chatbot.answers.${selected.id}`)}</p>
+
+                    <button
+                      type="button"
+                      className="gs-chat-link"
+                      onClick={() => {
+                        setIsOpen(false)
+                        navigate(selected.link)
+                      }}
+                    >
+                      {t(`chatbot.links.${selected.id}`)}
+                      <ArrowRight size={15} />
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="gs-chat-back"
+                  onClick={showQuestions}
+                >
+                  <ArrowRight size={14} />
+                  {t('chatbot.anotherQuestion')}
+                </button>
+              </>
+            ) : (
+              <div className="gs-chat-question-area">
+                <span className="gs-chat-question-label">
+                  {t('chatbot.quickQuestions')}
+                </span>
+
+                {questions.map((item) => (
+                  <button
+                    type="button"
+                    className="gs-chat-question"
+                    key={item.id}
+                    onClick={() => handleQuestion(item.id)}
+                  >
+                    {t(`chatbot.${item.id}`)}
+                    <ArrowRight size={15} />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <footer className="gs-chat-footer">
+            <span>
+              <Leaf size={13} />
+              {t('chatbot.footerMessage')}
+            </span>
+            <small>Global Seed Company</small>
+          </footer>
+        </section>
+      )}
+
+      <button
+        type="button"
+        className={`gs-chat-launcher ${isOpen ? 'is-open' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? t('chatbot.closeAssistant') : t('chatbot.openAssistant')}
+        aria-expanded={isOpen}
+      >
+        {isOpen ? (
+          <X size={23} />
+        ) : (
+          <MessageCircle size={23} strokeWidth={2.2} />
+        )}
+        {!isOpen && <span>{t('chatbot.launcher')}</span>}
+      </button>
+    </div>
+  )
+}
+function App() {
+  return (
+    <>
+      <Header />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/seeds" element={<SeedsPage />} />
+          <Route path="/seeds/:id" element={<SeedDetail />} />
+          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/knowledge" element={<KnowledgePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route
+            path="*"
+            element={
+              <PageHero
+                tag="404"
+                title="Page not found"
+                description="The page you are looking for does not exist."
+              />
+            }
+          />
+        </Routes>
+      </main>
+
+      <Footer />
+      {/* Floating chatbot on every page */}
+      <ChatAssistant />
+    </>
+  )
+}
+
 export default App
+
+

@@ -1,0 +1,65 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About Us",
+    "seeds": "Our Seeds",
+    "research": "Research & Development",
+    "knowledge": "Knowledge Center",
+    "contact": "Contact Us"
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "exploreProducts": "Explore Products",
+    "viewCatalogue": "View Catalogue",
+    "contactUs": "Contact Us",
+    "sendMessage": "Send Message",
+    "callUs": "Call Us",
+    "chatWithUs": "Chat with Us",
+    "readMore": "Read More",
+    "back": "Back"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "name": "Your Name",
+    "email": "Your Email",
+    "phone": "Your Phone Number",
+    "inquiry": "Inquiry Type",
+    "message": "Your Message",
+    "submit": "Send Message"
+  },
+  "chatbot": {
+    "title": "Global Seed Assistant",
+    "welcome": "Hello! Welcome to Global Seed Company.",
+    "greeting": "How can we help you today?",
+    "company": "What is Global Seed Company?",
+    "seeds": "What types of seeds do you offer?",
+    "selection": "How can I find the right seeds?",
+    "catalogue": "Where can I explore your catalogue?",
+    "distribution": "How can I ask about distribution?",
+    "contact": "How can I contact your team?",
+    "anotherQuestion": "Explore another question",
+    "headerSubtitle": "Here to help you grow",
+    "close": "Close chat",
+    "openAssistant": "Open Global Seed Assistant",
+    "links": {
+      "company": "Explore About Us",
+      "contact": "Go to Contact Page",
+      "catalogue": "View Catalogue",
+      "distribution": "Contact Our Team",
+      "seeds": "Explore Our Seeds",
+      "selection": "Browse Seed Catalogue"
+    },
+    "footerMessage": "Growing together, naturally.",
+    "closeAssistant": "Close assistant",
+    "answers": {
+      "company": "Welcome to Global Seed Company. Explore our website to learn more about the company and its seed-related offerings. For verified company information, our team will be happy to help.",
+      "contact": "We would be glad to hear from you. Visit our Contact page to share your inquiry with the Global Seed Company team.",
+      "catalogue": "Our seed catalogue is the place to explore the products currently listed on this website. Select a product to view its available information.",
+      "distribution": "For distribution opportunities, business proposals or partnership inquiries, please contact our team directly. They can provide information based on current company arrangements.",
+      "seeds": "You can explore the seed varieties currently listed in our online catalogue. For additional product details or availability, please contact our team.",
+      "selection": "Choosing seeds depends on factors such as your crop, growing conditions and farming goals. Explore our catalogue and contact our team if you need help finding relevant product information."
+    },
+    "quickQuestions": "QUICK QUESTIONS",
+    "launcher": "Chat with us"
+  }
+}
